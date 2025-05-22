@@ -1,8 +1,9 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
+import { BaseInteraction, Client, Events, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
-import { BaseInteraction } from "discord.js";
-import { SlashCommandObject } from "./scripts/types/SlashCommandObject";
 import { slashCommandList } from "./commands";
+import { config } from "./config";
+import { SlashCommandObject } from "./scripts/types/SlashCommandObject";
+import { Timer } from "./timer";
 import { getSlashCommandObject } from "./utils/slash-command";
 
 dotenv.config();
@@ -13,8 +14,12 @@ const client = new Client({
 });
 
 client.once(Events.ClientReady, async (client) => {
+
+    const timer = new Timer(client, config)
+
 	console.log(`✅ Ready! Logged in as ${client.user?.tag}`);
 	commands = getSlashCommandObject(slashCommandList);
+    timer.initTimer()
 });
 
 client.on("interactionCreate", async (interaction: BaseInteraction) => {
