@@ -40,7 +40,7 @@ export class Timer {
         setTimeout(() => {
             this.message.createDailyThread()
             setInterval(this.message.createDailyThread, 24* 60 * 60 * 1000)
-        }, 1)
+        }, timeDiff)
     }
 
     
